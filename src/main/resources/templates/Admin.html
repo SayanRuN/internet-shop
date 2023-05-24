@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator</title>
+</head>
+<body>
+<fieldset>
+    <legend><h2>Опубликованные комментарии</h2></legend>
+    <table th:each="comment:${trueComments}">
+        <tr>
+            <th>Имя пользователья:</th>
+            <td th:text="${comment.getIdUser().getName()}"></td>
+        </tr>
+        <tr>
+            <th>Комментарий:</th>
+            <td th:text="${comment.getComment()}"></td>
+        </tr>
+        <tr>
+            <td>
+                <form th:action="@{/admin/select2}" th:method="post">
+                    <button type="submit" th:value="${comment.getId()}" th:name="decision2">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+<fieldset>
+    <legend><h2>Удаленные комментарии</h2></legend>
+    <table th:each="comment:${falseComments}">
+        <tr>
+            <th>Имя пользователья:</th>
+            <td th:text="${comment.getIdUser().getName()}"></td>
+        </tr>
+        <tr>
+            <th>Комментарий:</th>
+            <td th:text="${comment.getComment()}"></td>
+        </tr>
+        <tr>
+            <td>
+                <form th:action="@{/admin/select}" th:method="post">
+                    <button type="submit" th:value="${comment.getId()}" th:name="decision">Опубликовать</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend><h2>Заказы</h2></legend>
+    <table th:each="order:${orders}">
+        <tr>
+            <th>Имя заказчика:</th>
+            <td th:text="${order.getIdUser()!=null?order.getIdUser().getName():'User'}"></td>
+        </tr>
+        <tr>
+            <th>Номер заказа:</th>
+            <td th:text="${order.getId()}"></td>
+        </tr>
+        <tr>
+            <th>Статус заказа:</th>
+            <td th:text="${order.getStatus()}"></td>
+        </tr>
+        <tr>
+            <td>
+                <form th:action="@{/admin/status}" th:method="post">
+                    <label>
+                        <select th:name="position">
+                            <option th:each="st:${status}" th:text="${st.name()}" th:value="${st.name()}"></option>
+                        </select>
+                    </label>
+                    <button th:name="id" th:value="${order.getId()}">Изменить</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+</body>
+</html>

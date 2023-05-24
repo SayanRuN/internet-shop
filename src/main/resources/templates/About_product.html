@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Продукт и отзывы</title>
+</head>
+<body>
+<!---->
+<fieldset>
+    <legend align="center"><h2>Продукт</h2></legend>
+    <table>
+        <tr>
+            <td><h4>Категория:</h4></td>
+            <td th:text="${product.getIdCategory().getName()}"></td>
+        </tr>
+        <tr>
+            <td><h4>Имя продукта:</h4></td>
+            <td th:text="${product.getName()}"></td>
+        </tr>
+        <tr th:each="value:${values}">
+            <td><h4 th:text="${value.getIdOption().getName()}"></h4></td>
+            <td th:text="${value.getName()}"></td>
+        </tr>
+        <tr>
+            <td><h4>Цена:</h4></td>
+            <td th:text="${product.getPrice()}"></td>
+        </tr>
+    </table>
+</fieldset>
+
+<div th:switch="${usersComment}">
+    <fieldset th:case="${null}">
+        <legend align="center"><h2>Вы не можете комментировать</h2></legend>
+        <h3>Для начала зарегестрируйтесь, чтобы оставить отзыв</h3>
+    </fieldset>
+
+    <fieldset th:case="${true}">
+        <legend align="center"><h2>Ваш отзыв</h2></legend>
+        <table th:each="comment1:${commentList}">
+            <tr>
+                <th> Ваша оценка</th>
+                <td th:text="${comment1.getEstimation()}"></td>
+            </tr>
+            <tr>
+                <th>Ваш комментарий</th>
+                <td th:text="${comment1.getComment()}"></td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <fieldset th:case="${false}">
+        <legend align="center"><h2>Оставьте Вашу оценку для будущих покупателей</h2></legend>
+        <form th:action="@{/response/responses}" th:method="post">
+            <p><label> Оцените товар от 1 до 5: <input th:name="estimate" th:type="number" required></label></p>
+            <p><label> Оставьте отзыв о товаре: <textarea th:name="comment" required></textarea></label></p>
+            <button type="submit" th:name="idProduct" th:value="${product.getId()}">Отправить</button>
+        </form>
+    </fieldset>
+</div>
+
+
+<fieldset>
+    <legend align="center"><h2>Отзывы о продукте от покупателей</h2></legend>
+
+    <h3 th:text="'Средняя оценка: '+ ${estimate} +' звезд'"></h3>
+    <table th:each="comment:${comments}">
+        <tr>
+            <th>Имя пользователя:</th>
+            <td th:text="${comment.getIdUser()!=null?comment.getIdUser().getName():'Пользователь'}"></td>
+        </tr>
+        <tr>
+            <th>Оценка:</th>
+            <td th:text="${comment.getEstimation()}"></td>
+        </tr>
+        <tr>
+            <th>Комментарий</th>
+            <td th:text="${comment.getComment()}"></td>
+        </tr>
+    </table>
+</fieldset>
+</body>
+</html>

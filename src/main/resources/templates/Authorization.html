@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization</title>
+</head>
+<body>
+
+<h1 align="center">Добро пожаловать на наш сайт</h1>
+
+<fieldset>
+    <legend align="center"><h2>Авторизация пользователя</h2></legend>
+    <form th:action="@{/registration/login}" method="post">
+        <h4><label>Введите логин <input type="text" name="username" required></label></h4>
+        <h4><label>Введите пароль <input type="password" name="password" required></label></h4>
+        <button>Войти</button>
+        <h5>Нет аккаунта? <a href="/registration/reg">Создай здесь</a></h5>
+    </form>
+</fieldset>
+
+
+</body>
+</html>

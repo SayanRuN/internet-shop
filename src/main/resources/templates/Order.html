@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ</title>
+</head>
+<body>
+<fieldset>
+    <legend align="center"><h2>Заказы</h2></legend>
+    <form th:action="@{/order/add_order}" method="post">
+        <p><label>Введите улицу  <input th:name="street" required></label></p>
+        <p><label>Введите номер дома  <input th:name="house" required></label></p>
+        <p> <label>Введите номер квартиры  <input th:name="flat"></label></p>
+        <p><button type="submit">Закзать</button></p>
+    </form>
+</fieldset>
+</body>
+</html>

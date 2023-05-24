@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+<fieldset>
+    <legend align="center"><h2>Создание продукта</h2></legend>
+    <form th:action="@{/create_product/list}" method="post">
+        <h4>Выберите категорию</h4>
+        <label>
+            <select th:name="category">
+                <option th:each="category:${categories}" th:text="${category.getName()}"
+                        th:value="${category.getId()}"></option>
+            </select>
+        </label>
+        <h4><label>Введите имя <input type="text" th:name="name" required></label></h4>
+        <h4><label>Введите цену <input type="number" th:name="price" required></label></h4>
+        <button>Создать</button>
+    </form>
+</fieldset>
+
+<fieldset>
+    <legend align="center"><h2>Выбор продукта</h2></legend>
+    <table>
+        <tr>
+            <th>Категория</th>
+            <th>Продукт</th>
+            <th>Количество</th>
+        </tr>
+        <tr th:each="product:${products}">
+            <td th:text="${product.getIdCategory().getName()}"></td>
+            <td>
+                <form th:action="@{/create_product/about_product}" method="get">
+                    <button th:text="${product.getName()}" th:name="idProduct" th:value="${product.getId()}"></button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/basket/add_basket}" method="post">
+                    <label><input type="number" th:name="quantity" required></label>
+                    <button type="submit" th:name="idProduct" th:value="${product.getId()}">Добавить в корзину</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <h4><a th:href="@{/basket/basket}">В корзину</a></h4>
+</fieldset>
+</body>
+</html>

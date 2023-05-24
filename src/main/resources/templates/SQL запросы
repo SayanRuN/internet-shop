@@ -1,0 +1,98 @@
+create table categories
+(
+    id   bigserial
+        primary key,
+    name varchar(100) not null
+);
+
+create table products
+(
+    id          bigserial
+        primary key,
+    id_category integer
+        references categories,
+    name        varchar(100) not null,
+    price       integer
+);
+
+create table options
+(
+    id          bigserial
+        primary key,
+    id_category integer
+        references categories,
+    name        varchar(100) not null
+);
+
+create table values
+(
+    id         bigserial
+        primary key,
+    id_product integer
+        references products,
+    id_option  integer
+        references options,
+    name       varchar(100) not null
+);
+
+create table values_of_orders
+(
+    id         bigint
+        primary key,
+    id_order   integer
+        references orders,
+    id_product integer
+        references products,
+    id_amount  integer
+);
+
+create table users
+(
+    id       bigserial
+        primary key,
+    role     smallint,
+    login    varchar(150),
+    password varchar(150),
+    email    varchar(150),
+    number   varchar(50),
+    name     varchar(150),
+    sur_name varchar(150),
+    reg_date timestamp
+);
+
+create table orders
+(
+    id         bigserial
+        primary key,
+    id_user    integer
+        references users,
+    status     smallint,
+    street     varchar(150),
+    house      integer,
+    flat       integer,
+    date_order timestamp
+);
+
+create table comments
+(
+    id         bigserial
+        primary key,
+    id_user    bigint
+        references users,
+    id_product integer
+        references products,
+    estimation integer not null,
+    comment    text    not null,
+    bool       boolean
+);
+
+create table basket
+(
+    id         bigserial
+        primary key,
+    id_user    integer
+        references users,
+    id_product integer
+        references products,
+    quantity   integer
+);

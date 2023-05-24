@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+<fieldset>
+    <legend align="center"><h2>Ваши товары</h2></legend>
+    <table>
+        <tr>
+            <th>Наименование продукта</th>
+            <th>Количество</th>
+            <th>Цена</th>
+        </tr>
+        <tr th:each="basket:${baskets}">
+            <td th:text="${basket.getProduct().getName()}"></td>
+            <td>
+                <form th:action="@{/basket/increase}" method="post">
+                    <button type="submit" name="id" th:value="${basket.getId()}">+</button>
+                </form>
+            </td>
+            <td th:text="${basket.getQuantity()}"></td>
+            <td>
+                <form th:action="@{/basket/decrease}" method="post">
+                    <button type="submit" name="id" th:value="${basket.getId()}">-</button>
+                </form>
+            </td>
+            <td th:text="${basket.getQuantity()*basket.getProduct().getPrice()}"></td>
+            <td>
+                <form th:action="@{/basket/delete_basket}" method="post">
+                    <button type="submit" name="idBasket" th:value="${basket.getId()}">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form th:action="@{/order/orderList}" method="get">
+                    <button type="submit">Оформить заказ</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+</body>
+</html>
